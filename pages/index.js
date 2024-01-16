@@ -37,19 +37,17 @@ const Home = () => {
       <Benefits data={benefitOne} />
       <Benefits imgPos="right" data={benefitTwo} />
       <SectionTitle
-        pretitle="Testimonials"
-        title="Here's what our customers said"
+        pretitle="Pendapat Alumni"
+        title="Pendapat para alumni universitas setelah kelulusan"
       >
         Testimonails is a great way to increase the brand trust and awareness.
         Use this section to highlight your popular customers.
       </SectionTitle>
       <Testimonials />
       <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
-        Answer your customers possible questions here, it will increase the
-        conversion rate as well as support or chat requests.
+        Pertanyaan seputar kampus, jurusan, dan lainnya.
       </SectionTitle>
       <Faq />
-      <Cta />
       <Footer />
       <PopupWidget />
     </>
