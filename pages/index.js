@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Hero from "../components/hero";
-import Navbar from "../components/navbar";
 import SectionTitle from "../components/sectionTitle";
 
 import { benefitOne, benefitTwo } from "../components/data";
@@ -11,6 +10,7 @@ import Testimonials from "../components/testimonials";
 import Cta from "../components/cta";
 import Faq from "../components/faq";
 import PopupWidget from "../components/popupWidget";
+import PublicNavbar from "../components/Layouts/public_navbar";
 
 const Home = () => {
   return (
@@ -24,7 +24,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      <PublicNavbar />
       <Hero />
       <SectionTitle
         pretitle="Nextly Benefits"
