@@ -1,19 +1,20 @@
-import React from 'react'
-import Head from "next/head";
-import Navbar from '../../components/navbar'
-import NewsCard from '../../components/NewsCard'
+import React from 'react';
+import Head from 'next/head';
+import PublicNavbar from '../../components/Layouts/public_navbar';
+import Card from '../../components/Layouts/card';
 
-export default function index() {
+// Contoh data berita statis (gantilah dengan data sesuai kebutuhan)
+const sampleNews = {
+  title: 'Judul Berita',
+  description: 'Deskripsi berita singkat.',
+  image: 'url_gambar_berita.jpg',
+};
+
+export default function Index() {
   return (
-    <><Head>
-        <title>Nextly - Free Nextjs & TailwindCSS Landing Page Template</title>
-        <meta
-          name="description"
-          content="Nextly is a free landing page template built with next.js & Tailwind CSS"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Navbar></Navbar>
-    <NewsCard></NewsCard></>
-  )
+    <>
+      <PublicNavbar />
+      <Card news={sampleNews} />
+    </>
+  );
 }

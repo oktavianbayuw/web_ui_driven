@@ -1,16 +1,8 @@
 import Link from "next/link";
-import ThemeChanger from "./DarkSwitch";
-import Image from "next/image";
+import ThemeChanger from "../DarkSwitch";
 import { Disclosure } from "@headlessui/react";
 
-const Navbar = () => {
-  const navigation = [
-    ["Akademik", "/akademik"],
-    ["Riset dan Inovasi", "/riset-inovasi"],
-    ["Kampus", "/kampus"],
-    ["Berita dan Pengumuman", "/news"],
-  ];
-
+const Navbar = ({ navigation, authLink }) => {
   return (
     <div className="w-full">
       <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
@@ -55,17 +47,17 @@ const Navbar = () => {
                     {navigation.map((item, index) => (
                       <Link
                         key={index}
-                        href="/"
+                        href={item[1]}
                         className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none"
                       >
-                        {item}
+                        {item[0]}
                       </Link>
                     ))}
                     <Link
-                      href="/"
+                      href={authLink}
                       className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5"
                     >
-                      Loginnya
+                      Login
                     </Link>
                   </>
                 </Disclosure.Panel>
@@ -92,7 +84,7 @@ const Navbar = () => {
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
           <Link
-            href="/login"
+            href={authLink}
             className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5"
           >
             Login

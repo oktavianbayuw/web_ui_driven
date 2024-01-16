@@ -1,12 +1,3 @@
-import {
-  FaceSmileIcon,
-  ChartBarSquareIcon,
-  CursorArrowRaysIcon,
-  DevicePhoneMobileIcon,
-  AdjustmentsHorizontalIcon,
-  SunIcon,
-} from "@heroicons/react/24/solid";
-
 import kuliah from "../public/img/kuliah.jpg";
 import seminar from "../public/img/seminar.jpg";
 
@@ -18,13 +9,6 @@ const benefitOne = {
 };
 
 const benefitTwo = {
-  title: "Seminar Kampus",
-  desc: "seminar adalah untuk menemukan cara atau sebuah jalan pemecahan suatu masalah. Karena dalam membahas masalah, tujuannya adalah mencari pemecahannya. Sehingga dalam seminar selalu diakhiri dengan kesimpulan atau resolusi.",
-  image: seminar,
-  bullets: [],
-};
-
-const news = {
   title: "Seminar Kampus",
   desc: "seminar adalah untuk menemukan cara atau sebuah jalan pemecahan suatu masalah. Karena dalam membahas masalah, tujuannya adalah mencari pemecahannya. Sehingga dalam seminar selalu diakhiri dengan kesimpulan atau resolusi.",
   image: seminar,
