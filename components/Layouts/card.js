@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const CardContainer = styled.div`
   display: flex;
@@ -8,13 +8,13 @@ const CardContainer = styled.div`
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 300px;
-  margin: 20px;
+  width: 1200px;
+  margin-left: 6%;
 
   &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 `;
 
