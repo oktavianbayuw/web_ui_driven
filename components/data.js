@@ -24,5 +24,18 @@ const benefitTwo = {
   bullets: [],
 };
 
+const news = {
+  title: "Seminar Kampus",
+  desc: "seminar adalah untuk menemukan cara atau sebuah jalan pemecahan suatu masalah. Karena dalam membahas masalah, tujuannya adalah mencari pemecahannya. Sehingga dalam seminar selalu diakhiri dengan kesimpulan atau resolusi.",
+  image: seminar,
+  bullets: [],
+};
+
+const News1 = {
+  title: "Seminar Kampus",
+  desc: "seminar adalah untuk menemukan cara atau sebuah jalan pemecahan suatu masalah. Karena dalam membahas masalah, tujuannya adalah mencari pemecahannya. Sehingga dalam seminar selalu diakhiri dengan kesimpulan atau resolusi.",
+  image: seminar,
+  bullets: [],
+};
 
 export {benefitOne, benefitTwo};
