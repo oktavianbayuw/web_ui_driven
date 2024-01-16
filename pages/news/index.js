@@ -2,19 +2,18 @@ import React from 'react';
 import Head from 'next/head';
 import PublicNavbar from '../../components/Layouts/public_navbar';
 import Card from '../../components/Layouts/card';
-import cardList from '../../components/Fragments/cardList';
 
 // Contoh data berita statis (gantilah dengan data sesuai kebutuhan)
 const sampleNews = [
   {
-    title: 'Judul Berita 1',
-    description: 'Deskripsi berita singkat 1.',
-    image: 'kuliah.jpg',
+    title: 'Perkuliahan Online',
+    description: 'kuliah online telah menjadi alternatif populer untuk kuliah kelas fisik, terutama selama pandemi COVID-19 ketika banyak universitas maupun institusi pendidikan menutup kampus mereka lalu beralih ke pembelajaran jarak jauh.',
+    image: '/img/kuliah.jpg',
   },
   {
-    title: 'Judul Berita 2',
-    description: 'Deskripsi berita singkat 2.',
-    image: 'url_gambar_berita_2.jpg',
+    title: 'Seminar Nasional Technopex',
+    description: 'Seminar Nasional Technopex 2023 adalah Agenda rutin tahunan yang dilaksanakan dalam rangkaian Dies Natalis ITI ke 39.  Seminar nasional ini akan dilaksanakan secara full online dalam satu hari yang terdiri dari sesi utama dan paralel. Sesi utama adalah penyampaian materi dari narasumber-narasumber dengan topik berdasarkan keahliannya.',
+    image: '/img/seminar.jpg',
   },
   // Tambahkan data berita lainnya sesuai kebutuhan
 ];
@@ -43,11 +42,62 @@ export default function Index() {
           </li>
         </ol>
       </nav>
-      {/* ... */}
-      {sampleNews.map((news, index) => (
-        <><Card key={index} news={news} /></>
-      ))}
-      <cardList></cardList>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+        {sampleNews.map((news, index) => (
+          <Card key={index} news={news} />
+        ))}
+        </div>
+        <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between mb-4">
+              <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Pengumuman</h5>
+              <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                  View all
+              </a>
+        </div>
+        <div class="flow-root">
+              <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                  <li class="py-3 sm:py-4">
+                      <div class="flex items-center">
+                          <div class="flex-shrink-0">
+                              <img class="w-8 h-8 rounded-full" src="/img/seminar.jpg" alt="Neil image"/>
+                          </div>
+                          <div class="flex-1 min-w-0 ms-4">
+                              <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                  Seminar Nasional 2023
+                              </p>
+                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                              Seminar Nasional Technopex 2023 adalah Agenda rutin tahunan yang dilaksanakan dalam rangkaian Dies Natalis ITI ke 39.  Seminar nasional ini akan dilaksanakan secara full online dalam satu hari yang terdiri dari sesi utama dan paralel. Sesi utama adalah penyampaian materi dari narasumber-narasumber dengan topik berdasarkan keahliannya.
+                              </p>
+                          </div>
+                          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                              Detail
+                          </div>
+                      </div>
+                  </li>
+                  <li class="py-3 sm:py-4">
+                      <div class="flex items-center">
+                          <div class="flex-shrink-0">
+                              <img class="w-8 h-8 rounded-full" src="/img/kuliah.jpg" alt="Neil image"/>
+                          </div>
+                          <div class="flex-1 min-w-0 ms-4">
+                              <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                              Perkuliahan Online
+                              </p>
+                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                              Seminar Nasional Technopex 2023 adalah Agenda rutin tahunan yang dilaksanakan dalam rangkaian Dies Natalis ITI ke 39.  Seminar nasional ini akan dilaksanakan secara full online dalam satu hari yang terdiri dari sesi utama dan paralel. Sesi utama adalah penyampaian materi dari narasumber-narasumber dengan topik berdasarkan keahliannya.
+                              </p>
+                          </div>
+                          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                              Detail
+                          </div>
+                      </div>
+                  </li>
+              </ul>
+        </div>
+      </div>
+        </div>
+      
     </>
   );
 }

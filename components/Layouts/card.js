@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const CardContainer = styled.div`
   display: flex;
@@ -8,17 +8,19 @@ const CardContainer = styled.div`
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 60%;
+  width: 90%;
   margin: 20px;
+  margin-left: 3%;
 
   &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 `;
 
 const CardImage = styled.img`
+  padding: 10px;
   width: 100%;
   height: 200px;
   border-radius: 10px 10px 0 0;
@@ -37,7 +39,7 @@ const Card = ({ news }) => {
   return (
     <CardContainer>
       <CardImage src={news.image} alt={news.title} />
-      <CardTitle>{news.title}</CardTitle>
+      <CardTitle><strong>{news.title}</strong></CardTitle>
       <CardDescription>{news.description}</CardDescription>
     </CardContainer>
   );
