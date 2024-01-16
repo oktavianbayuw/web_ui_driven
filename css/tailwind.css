@@ -5,7 +5,9 @@
 @layer base {
   html,
   body {
+    dark:bg-trueGray-900;
+  }
+  div {
     padding-left: 20px;
-    @apply dark:bg-trueGray-300;
   }
 }
