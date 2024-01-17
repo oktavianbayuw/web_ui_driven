@@ -7,9 +7,6 @@
   body {
     dark:bg-trueGray-900;
   }
-  div {
-    padding-left: 20px;
-  }
   .news-card {
     display: flex;
     border: 1px solid #ddd;

@@ -12,7 +12,7 @@ const Navbar = ({ navigation, authLink }) => {
             <>
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto">
                 <Link href="/">
-                  <span className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
+                  <span className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100 ml-6">
                     <span>Universitas Tugu Muda</span>
                   </span>
                 </Link>

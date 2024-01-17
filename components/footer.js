@@ -16,10 +16,10 @@ export default function Footer() {
       <Container>
         <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-gray-100 dark:border-trueGray-700 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
-              Nextly is a free landing page & marketing website
+            <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400 ml-6">
+              <p>Nextly is a free landing page & marketing website
               template for startups and indie projects. Its built with
-              Next.js & TailwindCSS. And its completely open-source.
+              Next.js & TailwindCSS. And its completely open-source.</p>
             </div>
           </div>
 
