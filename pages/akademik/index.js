@@ -1,12 +1,33 @@
 import Breadcrumb from "../../components/Fragments/breadcrumb";
-import Card from "../../components/Layouts/card";
+import ImageList from "../../components/Fragments/imageList";
 import PublicNavbar from "../../components/Layouts/public_navbar";
+import Footer from "../../components/footer";
 import Slider from "../../components/slider";
 
 const breadcrumbs = [
   { label: 'Home', url: '/' },
   { label: 'Akademik', url: '/akademik', }, // Gantilah dengan path ikon yang sesuai
 ];
+const imageListData = [
+  {
+    src: '/img/kedokteran.jpg',
+    alt: 'Image 2',
+    link: '#',
+    description: 'Fakultas Kedokteran',
+  },
+  {
+    src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-2.png',
+    alt: 'Image 2',
+    link: '#',
+    description: 'Fakultas Teknik Komputer',
+  },
+  {
+    src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-2.png',
+    alt: 'Image 2',
+    link: '#',
+    description: 'Fakultas Teknik Komputer',
+  },
+]
 export default function index() {
   return (
     <>
@@ -27,11 +48,12 @@ export default function index() {
         </div>
       </div>
       <div className="ml-6">
-        <div className="p-5">
+        <div className="p-3">
         <h2 class="mb-4 mt-6 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Daftar Fakultas</h2>
-
+        <ImageList images={imageListData} />
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 }
