@@ -4,9 +4,8 @@ const AdminSidebar = () => {
   const navigation = [
     ['Dashboard', '/dashboard'],
     ['Profile', '/profile'],
-    ['Kegiatan Kampus', '/pages'],
+    ['Kegiatan Kampus', '/kegiatan'],
     ['Info Kampus', '/info-kampus'],
-    // Add more items here
   ];
   return (
     <>

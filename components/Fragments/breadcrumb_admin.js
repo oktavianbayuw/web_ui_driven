@@ -1,15 +1,15 @@
 const AdminBreadCrumb = ({ toHome, current_page, previous_page }) => {
   return (
     <>
-      <nav class="flex flex-col justify-center" aria-label="AdminBreadCrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse pt-20 pl-4">
-          <li class="inline-flex items-center">
+      <nav className="flex flex-col justify-center" aria-label="AdminBreadCrumb">
+        <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse pt-20 pl-4">
+          <li className="inline-flex items-center">
             <a
               href={toHome}
-              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
-                class="w-3 h-3 me-2.5"
+                className="w-3 h-3 me-2.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -21,9 +21,9 @@ const AdminBreadCrumb = ({ toHome, current_page, previous_page }) => {
             </a>
           </li>
           <li>
-            <div class="flex items-center">
+            <div className="flex items-center">
               <svg
-                class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -37,7 +37,7 @@ const AdminBreadCrumb = ({ toHome, current_page, previous_page }) => {
                   d="m1 9 4-4-4-4"
                 />
               </svg>
-              <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">
+              <p className="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">
                 {current_page}
               </p>
             </div>
