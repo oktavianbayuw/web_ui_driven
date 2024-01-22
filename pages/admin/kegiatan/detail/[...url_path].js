@@ -28,9 +28,16 @@ export default function PenelitianDetailPage() {
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <h2 className="text-xl font-bold mb-2">{detail.judul_penelitian}</h2>
-          <p className="text-gray-700">{detail.nama_dosen}</p>
-          <p className="text-gray-700 mb-3">{detail.tahun_penelitian}</p>
-          {/* Tambahkan bagian detail lainnya sesuai kebutuhan */}
+          <p className="text-gray-700 mb-3">{detail.nama_dosen}</p>
+          <p className="text-gray-700 mb-3">
+            <b>Tahun Penelitian : </b> {detail.tahun_penelitian}
+          </p>
+          <p className="text-gray-700 mb-3">
+            <b>Bidang Penelitian :</b> {detail.bidang_penelitian}
+          </p>
+          <p className="text-gray-700 mb-3">
+            <b>Status Penelitian : </b> {detail.status_penelitian}
+          </p>
         </div>
       </div>
     </>

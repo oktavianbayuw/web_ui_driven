@@ -10,9 +10,9 @@ let client;
 let database;
 
 const connectDB = async () => {
-  if (client && client.isConnected()) {
-    return database;
-  }
+  // if (client && client.isConnected()) {
+  //   return database;
+  // }
 
   client = new MongoClient(uri, options);
 
