@@ -4,7 +4,6 @@ const PublicNavbar = () => {
   const navigation = [
     ["Akademik", "/akademik"],
     ["Riset dan Inovasi", "/riset-inovasi"],
-    ["Kampus", "/kampus"],
     ["Berita dan Pengumuman", "/news"],
   ];
   const authLink = "/login";
