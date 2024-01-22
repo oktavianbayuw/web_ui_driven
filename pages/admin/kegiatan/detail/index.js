@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminSidebar from '../../../components/Layouts/admin_sidebar'
+import AdminSidebar from '../../../../components/Layouts/admin_sidebar'
 
 export default function penelitian_detail() {
   const details = [
