@@ -2,10 +2,10 @@ import Sidebar from "../Fragments/sidebar";
 
 const AdminSidebar = () => {
   const navigation = [
-    ['Dashboard', '/dashboard'],
-    ['Profile', '/profile'],
-    ['Kegiatan Kampus', '/kegiatan'],
-    ['Info Kampus', '/info-kampus'],
+    ['Dashboard', '/admin/dashboard'],
+    ['Profile', '/admin/profile'],
+    ['Kegiatan Kampus', '/admin/kegiatan/penelitian'],
+    ['Info Kampus', '/admin/info-kampus'],
   ];
   return (
     <>
