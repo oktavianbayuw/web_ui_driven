@@ -4,7 +4,7 @@ const AdminSidebar = () => {
   const navigation = [
     ['Dashboard', '/admin/dashboard'],
     ['Profile', '/admin/profile'],
-    ['Kegiatan Kampus', '/admin/kegiatan/penelitian'],
+    ['Kegiatan Kampus', '/admin/kegiatan'],
     ['Info Kampus', '/admin/info-kampus'],
   ];
   return (
