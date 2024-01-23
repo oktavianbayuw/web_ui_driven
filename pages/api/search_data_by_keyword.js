@@ -14,14 +14,10 @@ export default async function handler(req, res) {
     let query = {};
 
     if (keywords && Array.isArray(keywords)) {
-      const individualKeywords = keywords.join(" ").split(" ");
+      const cleanedKeywords = keywords.join(" ").split(" ").map(keyword => keyword.toLowerCase());
 
       query = {
-        $or: individualKeywords.map((keyword) => ({
-          field1: keyword,
-          field2: keyword,
-          // tambahkan field lain sesuai kebutuhan
-        })),
+        metadata: { $all: cleanedKeywords },
       };
     }
 

@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminSidebar from "../../../components/Layouts/admin_sidebar";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function penelitian_detail() {
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageSize = 10; // Jumlah item per halaman
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/penelitian");
+      const response = await fetch(`/api/penelitian?page=${currentPage}&pageSize=${pageSize}`);
       const result = await response.json();
       setData(result.data);
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -39,6 +41,22 @@ export default function penelitian_detail() {
               </Link>
             </div>
           ))}
+        </div>
+        {/* Tambahkan navigasi halaman */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Next
+          </button>
         </div>
       </div>
     </>
