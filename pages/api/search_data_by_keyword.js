@@ -9,21 +9,39 @@ export default async function handler(req, res) {
 
   try {
     const db = await connectDB();
-    const collection = db.collection("penelitian_dosen");
 
-    let query = {};
+    // Define collections to search in
+    const collections = [
+      "info_berita_kampus",
+      "info_pendidikan_kampus",
+      "info_pengumuman_kampus",
+      "penelitian_dosen",
+    ];
 
-    if (keywords && Array.isArray(keywords)) {
-      const cleanedKeywords = keywords.join(" ").split(" ").map(keyword => keyword.toLowerCase());
+    // Initialize an empty result array
+    let results = [];
 
-      query = {
-        metadata: { $all: cleanedKeywords },
-      };
+    // Loop through each collection and perform the search
+    for (const collectionName of collections) {
+      const collection = db.collection(collectionName);
+
+      let query = {};
+
+      if (keywords && Array.isArray(keywords)) {
+        const keywordArray = keywords.map(
+          (keyword) => new RegExp(keyword, "i")
+        );
+
+        query = {
+          metadata: { $regex: keywordArray.join("|") },
+        };
+
+        const data = await collection.find(query).toArray();
+        results = results.concat(data);
+      }
     }
 
-    const data = await collection.find(query).toArray();
-
-    res.status(200).json({ data });
+    res.status(200).json({ results });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

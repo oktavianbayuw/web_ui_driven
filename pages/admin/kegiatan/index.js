@@ -7,25 +7,21 @@ export default function penelitian() {
   const cards = [
     {
       title: "Ospek",
-      content: "Content 1",
       link: "#",
       bg_img: "/img/orientation-2.jpg",
     },
     {
       title: "Mapala",
-      content: "Content 2",
       link: "#",
       bg_img: "/img/mapala.jpg",
     },
     {
       title: "Pameran",
-      content: "Content 3",
       link: "#",
       bg_img: "/img/pameran.jpg",
     },
     {
       title: "Penelitian",
-      content: "Content 4",
       link: "/admin/kegiatan/penelitian",
       bg_img: "/img/research.jpg",
     },

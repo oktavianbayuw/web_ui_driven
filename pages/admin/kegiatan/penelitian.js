@@ -5,18 +5,47 @@ import Link from "next/link";
 export default function penelitian_detail() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const { keywords } = router.query;
 
-  const pageSize = 10; // Jumlah item per halaman
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/penelitian?page=${currentPage}&pageSize=${pageSize}`);
+      const response = await fetch(
+        `/api/penelitian?page=${currentPage}&pageSize=${pageSize}`
+      );
       const result = await response.json();
       setData(result.data);
     };
 
     fetchData();
   }, [currentPage]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = keywords
+          ? `/api/search_data_by_keyword?keywords=${keywords}`
+          : "/api/penelitian";
+
+        const response = await fetch(apiUrl);
+        const result = await response.json();
+
+        console.log(result);
+        if (result && result.data && Array.isArray(result.data)) {
+          setData(result.data);
+        } else {
+          setData([]);
+        }
+      } catch (error) {
+        console.error(error);
+        setData([]);
+      }
+    };
+
+    fetchData();
+  }, [keywords]);
 
   return (
     <>

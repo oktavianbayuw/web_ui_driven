@@ -1,27 +1,92 @@
 // Sidebar.js
-import React,  { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 
 const Sidebar = ({ navigation }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `/api/search_data_by_keyword?keywords=${searchQuery}`
+      );
+      const searchData = response.data.results;
+
+      console.log(searchData);
+
+      const hasPenelitianKeyword = searchQuery
+        .toLowerCase()
+        .includes("penelitian");
+      const hasInformasiKeyword = searchQuery
+        .toLowerCase()
+        .includes("informasi");
+
+      if (hasPenelitianKeyword) {
+        window.location.href = `/admin/kegiatan/penelitian?keywords=${searchQuery}`;
+      } else if (hasInformasiKeyword) {
+        window.location.href = `/info-kampus?keywords=${searchQuery}`;
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
+  };
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end">
-            <div className="absolute bottom-0 inset-x-0 mx-auto m-2 w-1/2 rounded-sm">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                      <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                      </svg>
-              </div>
-              <input type="text" id="voice-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." required/>
-              <button type="button" className="absolute inset-y-0 end-0 flex items-center pe-3">
-                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"/>
+              <div className="absolute bottom-0 inset-x-0 mx-auto m-2 w-1/2 rounded-sm">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
                   </svg>
-              </button>
+                </div>
+                <input
+                  type="text"
+                  id="voice-search"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 end-0 flex items-center pe-3"
+                  onClick={handleSearch}
+                >
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 16 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"
+                    />
+                  </svg>
+                </button>
               </div>
               <button
                 data-drawer-target="logo-sidebar"
@@ -135,44 +200,44 @@ const Sidebar = ({ navigation }) => {
           </div>
         </div>
       </nav>
-       <aside
+      <aside
         id="logo-sidebar"
         className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-      <ul className="space-y-2 font-medium">
-        {navigation.map((item, index) => (
-          <li key={index}>
-            <Link
-              href={item[1]}
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              onClick={(e) => {
-                setOpenIndex(index === openIndex ? null : index);
-              }}
-            >
-              {item[2]}
-              <span className="ms-3">{item[0]}</span>
-            </Link>
-            {index === openIndex && item[3] && (
-              <ul className="pl-4">
-                {item[3].map((subItem, subIndex) => (
-                  <li key={subIndex}>
-                    <Link
-                      href={subItem[1]}
-                      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    >
-                      {subItem[2]}
-                      <span className="ms-3">{subItem[0]}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+          <ul className="space-y-2 font-medium">
+            {navigation.map((item, index) => (
+              <li key={index}>
+                <Link
+                  href={item[1]}
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={(e) => {
+                    setOpenIndex(index === openIndex ? null : index);
+                  }}
+                >
+                  {item[2]}
+                  <span className="ms-3">{item[0]}</span>
+                </Link>
+                {index === openIndex && item[3] && (
+                  <ul className="pl-4">
+                    {item[3].map((subItem, subIndex) => (
+                      <li key={subIndex}>
+                        <Link
+                          href={subItem[1]}
+                          className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                          {subItem[2]}
+                          <span className="ms-3">{subItem[0]}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="fixed left-0 bottom-0 w-64 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
           <button className="bg-red-400 p-2 rounded-sm w-full text-white text-center">
             Logout
