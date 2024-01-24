@@ -47,6 +47,7 @@ const Sidebar = ({ navigation }) => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       setRecordingComplete(true);
+      handleSearch();
     }
   };
 
