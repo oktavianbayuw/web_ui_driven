@@ -9,7 +9,7 @@ const Sidebar = ({ navigation }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchStatus, setSearchStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const toggle = () => setIsVoiceModalOpen(!isVoiceModalOpen); // Function to toggle the modal
+  const toggle = () => setIsVoiceModalOpen(!isVoiceModalOpen);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
@@ -19,7 +19,6 @@ const Sidebar = ({ navigation }) => {
 
   const recognitionRef = useRef(null);
 
-  console.log(voiceSearchTranscript);
   const startRecording = () => {
     setIsRecording(true);
     recognitionRef.current = new window.webkitSpeechRecognition();
@@ -28,9 +27,8 @@ const Sidebar = ({ navigation }) => {
 
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
-      console.log(event.results);
       setTranscript(transcript);
-      setVoiceSearchTranscript(transcript); // Tambahkan baris ini
+      setVoiceSearchTranscript(transcript);
     };
 
     recognitionRef.current.start();
@@ -118,8 +116,8 @@ const Sidebar = ({ navigation }) => {
                   id="voice-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search..."
-                  value={voiceSearchTranscript} // Ubah nilai dari searchQuery ke voiceSearchTranscript
-                  onChange={(e) => setVoiceSearchTranscript(e.target.value)} // Ubah setSearchQuery menjadi setVoiceSearchTranscript
+                  value={voiceSearchTranscript}
+                  onChange={(e) => setVoiceSearchTranscript(e.target.value)}
                   required
                 />
                 {isRecording ? (

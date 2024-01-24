@@ -1,7 +1,6 @@
 import React from "react";
 import AdminSidebar from "../../../components/Layouts/admin_sidebar";
 import Link from "next/link";
-import { FaRegLightbulb, FaRegMoon, FaRegSun, FaRegStar } from "react-icons/fa"; // import the icons
 
 export default function penelitian() {
   const cards = [
@@ -25,7 +24,6 @@ export default function penelitian() {
       link: "/admin/kegiatan/penelitian",
       bg_img: "/img/research.jpg",
     },
-    // Add more cards here
   ];
 
   return (

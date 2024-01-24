@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 
   const { keywords } = req.query;
 
-  // Proses kata kunci untuk menghilangkan kata tanya atau kata hubung
   const processedKeywords = keywords.replace(/[\?\.,]/g, "").split(" ");
 
   try {
