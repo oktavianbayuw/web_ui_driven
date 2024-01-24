@@ -1,10 +1,12 @@
-// Sidebar.js
 import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import Router from "next/router";
 
 const Sidebar = ({ navigation }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchStatus, setSearchStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = async () => {
@@ -12,25 +14,19 @@ const Sidebar = ({ navigation }) => {
       const response = await axios.get(
         `/api/search_data_by_keyword?keywords=${searchQuery}`
       );
-      const searchData = response.data.results;
+      const { results, route } = response.data;
 
-      console.log(searchData);
+      if (route) {
+        Router.push(`/${route}?keywords=${searchQuery}`);
+      } else {
+        setSearchResults(results);
 
-      const hasPenelitianKeyword = searchQuery
-        .toLowerCase()
-        .includes("penelitian");
-      const hasInformasiKeyword = searchQuery
-        .toLowerCase()
-        .includes("informasi");
-
-      if (hasPenelitianKeyword) {
-        window.location.href = `/admin/kegiatan/penelitian?keywords=${searchQuery}`;
-      } else if (hasInformasiKeyword) {
-        window.location.href = `/info-kampus?keywords=${searchQuery}`;
+        setSearchStatus(
+          results.length > 0 ? "Results found" : "No results found"
+        );
       }
     } catch (error) {
       console.error(error);
-      // Handle error
     }
   };
   return (
@@ -117,7 +113,7 @@ const Sidebar = ({ navigation }) => {
                   alt="Website Logo"
                 />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  ADMIN
+                  DEA G-Speech
                 </span>
               </a>
             </div>

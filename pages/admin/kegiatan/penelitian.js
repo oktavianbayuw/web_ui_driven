@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminSidebar from "../../../components/Layouts/admin_sidebar";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function penelitian_detail() {
   const [data, setData] = useState([]);
@@ -12,31 +13,20 @@ export default function penelitian_detail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `/api/penelitian?page=${currentPage}&pageSize=${pageSize}`
-      );
-      const result = await response.json();
-      setData(result.data);
-    };
-
-    fetchData();
-  }, [currentPage]);
-
-  useEffect(() => {
-    const fetchData = async () => {
       try {
         const apiUrl = keywords
           ? `/api/search_data_by_keyword?keywords=${keywords}`
-          : "/api/penelitian";
+          : `/api/penelitian?page=${currentPage}&pageSize=${pageSize}`;
 
         const response = await fetch(apiUrl);
         const result = await response.json();
 
-        console.log(result);
-        if (result && result.data && Array.isArray(result.data)) {
-          setData(result.data);
+        console.log("Search Result:", result);
+
+        if (result && result.results && Array.isArray(result.results)) {
+          setData(result.results);
         } else {
-          setData([]);
+          setData(result.data);
         }
       } catch (error) {
         console.error(error);
@@ -44,8 +34,10 @@ export default function penelitian_detail() {
       }
     };
 
+    console.log(data);
+
     fetchData();
-  }, [keywords]);
+  }, [keywords, currentPage]);
 
   return (
     <>
@@ -82,7 +74,7 @@ export default function penelitian_detail() {
           </button>
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Next
           </button>

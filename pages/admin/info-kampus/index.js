@@ -1,25 +1,10 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import AdminSidebar from "../../../components/Layouts/admin_sidebar";
+import React, { useEffect, useState } from "react";
 import Card from "../../../components/Layouts/card";
 import Pengumuman from "../../../components/Layouts/pengumuman";
 import InfoCard from "../../../components/Layouts/infoCard";
 import Link from "next/link";
-
-const sampleNews = [
-  {
-    title: "Perkuliahan Online",
-    description:
-      "kuliah online telah menjadi alternatif populer untuk kuliah kelas fisik, terutama selama pandemi COVID-19 ketika banyak universitas maupun institusi pendidikan menutup kampus mereka lalu beralih ke pembelajaran jarak jauh.",
-    image: "/img/kuliah.jpg",
-  },
-  {
-    title: "Seminar Nasional Technopex",
-    description:
-      "Seminar Nasional Technopex 2023 adalah Agenda rutin tahunan yang dilaksanakan dalam rangkaian Dies Natalis ITI ke 39.  Seminar nasional ini akan dilaksanakan secara full online dalam satu hari yang terdiri dari sesi utama dan paralel. Sesi utama adalah penyampaian materi dari narasumber-narasumber dengan topik berdasarkan keahliannya.",
-    image: "/img/seminar.jpg",
-  },
-];
+import AdminSidebar from "../../../components/Layouts/admin_sidebar";
+import { useRouter } from "next/router";
 
 const schedules = [
   {
@@ -35,35 +20,45 @@ const schedules = [
     detailLink: "/lecture-details",
   },
 ];
-const announcements = [
-  {
-    title: "Seminar Nasional 2023",
-    description:
-      "Seminar Nasional Technopex 2023 adalah Agenda rutin tahunan...",
-    image: "/img/seminar.jpg",
-    detailLink: "/seminar-details",
-  },
-  {
-    title: "Perkuliahan Online",
-    description: "Perkuliahan online adalah salah satu metode pembelajaran...",
-    image: "/img/kuliah.jpg",
-    detailLink: "/lecture-details",
-  },
-  // Add more announcements as needed
-];
+
 export default function index() {
   const [data, setData] = useState([]);
   const [data_pengumuman, setDataPengumuman] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const { keywords } = router.query;
+
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/info_berita_kampus");
-      const result = await response.json();
-      setData(result.data);
+      try {
+        const apiUrl = keywords
+          ? `/api/search_data_by_keyword?keywords=${keywords}`
+          : `/api/info_berita_kampus?page=${currentPage}&pageSize=${pageSize}`;
+
+        const response = await fetch(apiUrl);
+        const result = await response.json();
+
+        console.log("Search Result:", result);
+
+        if (result && result.results && Array.isArray(result.results)) {
+          setData(result.results);
+        } else {
+          setData(result.data);
+        }
+      } catch (error) {
+        console.error(error);
+        setData([]);
+      }
     };
 
-    fetchData();
+    console.log(data);
 
+    fetchData();
+  }, [keywords, currentPage]);
+
+  useEffect(() => {
     const fetchDataPengumuman = async () => {
       const response = await fetch("/api/info_pengumuman_kampus");
       const result = await response.json();
@@ -74,7 +69,7 @@ export default function index() {
   }, []);
   return (
     <>
-      <AdminSidebar></AdminSidebar>
+      <AdminSidebar />
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <div className="grid grid-cols-2 gap-4">

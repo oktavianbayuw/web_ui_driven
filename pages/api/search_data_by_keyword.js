@@ -10,7 +10,6 @@ export default async function handler(req, res) {
   try {
     const db = await connectDB();
 
-    // Define collections to search in
     const collections = [
       "info_berita_kampus",
       "info_pendidikan_kampus",
@@ -18,30 +17,38 @@ export default async function handler(req, res) {
       "penelitian_dosen",
     ];
 
-    // Initialize an empty result array
     let results = [];
 
-    // Loop through each collection and perform the search
+    let route = "";
+
     for (const collectionName of collections) {
-      const collection = db.collection(collectionName);
+      const metadataSearch = await db
+        .collection(collectionName)
+        .find({ metadata: { $in: keywords.split(" ") } })
+        .toArray();
 
-      let query = {};
+      const urlPathSearch = await db
+        .collection(collectionName)
+        .find({ url_path: { $regex: new RegExp(keywords, "i") } })
+        .toArray();
 
-      if (keywords && Array.isArray(keywords)) {
-        const keywordArray = keywords.map(
-          (keyword) => new RegExp(keyword, "i")
-        );
+      results = results.concat(metadataSearch, urlPathSearch);
+    }
 
-        query = {
-          metadata: { $regex: keywordArray.join("|") },
-        };
-
-        const data = await collection.find(query).toArray();
-        results = results.concat(data);
+    if (results.length > 0 && results[0].url_path) {
+      const urlPath = results[0].url_path.toLowerCase();
+      if (urlPath.includes("penelitian")) {
+        route = "admin/kegiatan/penelitian";
+      } else if (
+        urlPath.includes("berita") ||
+        urlPath.includes("info-pendidikan") ||
+        urlPath.includes("pengumuman")
+      ) {
+        route = "admin/info-kampus";
       }
     }
 
-    res.status(200).json({ results });
+    res.status(200).json({ results, route });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
