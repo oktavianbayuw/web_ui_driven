@@ -68,14 +68,19 @@ const Sidebar = ({ navigation }) => {
       );
       const { results, route } = response.data;
 
-      if (route) {
-        Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
+      if (voiceSearchTranscript === "") {
+        setSearchStatus("No results found");
+        alert("Silakan Masukkan Keyword Pencarian");
       } else {
-        setSearchResults(results);
+        if (route) {
+          Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
+        } else {
+          setSearchResults(results);
 
-        setSearchStatus(
-          results.length > 0 ? "Results found" : "No results found"
-        );
+          setSearchStatus(
+            results.length > 0 ? "Results found" : "No results found"
+          );
+        }
       }
     } catch (error) {
       console.error(error);
