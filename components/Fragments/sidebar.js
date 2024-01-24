@@ -19,19 +19,20 @@ const Sidebar = ({ navigation }) => {
 
   const recognitionRef = useRef(null);
 
+  console.log(voiceSearchTranscript);
   const startRecording = () => {
     setIsRecording(true);
     recognitionRef.current = new window.webkitSpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
-  
+
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
       console.log(event.results);
       setTranscript(transcript);
       setVoiceSearchTranscript(transcript); // Tambahkan baris ini
     };
-  
+
     recognitionRef.current.start();
   };
 
@@ -60,15 +61,15 @@ const Sidebar = ({ navigation }) => {
     }
   };
 
-  const handleSearch = async () => { 
+  const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `/api/search_data_by_keyword?keywords=${searchQuery}`
+        `/api/search_data_by_keyword?keywords=${voiceSearchTranscript}`
       );
       const { results, route } = response.data;
 
       if (route) {
-        Router.push(`/${route}?keywords=${searchQuery}`);
+        Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
       } else {
         setSearchResults(results);
 
@@ -81,19 +82,15 @@ const Sidebar = ({ navigation }) => {
     }
   };
   const openModal = () => {
-  setIsModalOpen(true);
-};
-
-const closeModal = () => {
-  setIsModalOpen(false);
-};
+    setIsModalOpen(true);
+  };
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end">
-              <div className="absolute bottom-0 inset-x-0 mx-auto m-2 w-1/2 rounded-sm">  
+              <div className="absolute bottom-0 inset-x-0 mx-auto m-2 w-1/2 rounded-sm">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg
                     className="w-4 h-4"
@@ -116,88 +113,72 @@ const closeModal = () => {
                   id="voice-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search..."
-                  value={voiceSearchTranscript}  // Ubah nilai dari searchQuery ke voiceSearchTranscript
-                  onChange={(e) => setVoiceSearchTranscript(e.target.value)}  // Ubah setSearchQuery menjadi setVoiceSearchTranscript
+                  value={voiceSearchTranscript} // Ubah nilai dari searchQuery ke voiceSearchTranscript
+                  onChange={(e) => setVoiceSearchTranscript(e.target.value)} // Ubah setSearchQuery menjadi setVoiceSearchTranscript
                   required
                 />
-                <button
+                {isRecording ? (
+                  <button
+                    onClick={handleToggleRecording}
+                    className="absolute inset-y-0 end-0 flex items-center pe-3"
+                  >
+                    <svg
+                      className="w-4 h-4 text-red-600 dark:text-red-600 hover:text-red-900 dark:hover:text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 16 20"
+                    >
+                      <rect
+                        x="5"
+                        y="7"
+                        width="3"
+                        height="100"
+                        fill="currentColor"
+                      />
+                      <rect
+                        x="9"
+                        y="7"
+                        width="3"
+                        height="100"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleToggleRecording}
+                    className="absolute inset-y-0 end-0 flex items-center pe-3"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 16 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"
+                      />
+                    </svg>
+                  </button>
+                )}
+                {/* <button
                   type="button"
                   className="absolute inset-y-0 end-0 flex items-center pe-3"
                   onClick={handleSearch}
+                ></button> */}
+
+                {/* <button
+                  type="button"
+                  className="absolute inset-y-0 end-0 flex items-center pe-3"
+                  onClick={openModal}
                 >
-                </button>
-                {isModalOpen && (
-                  <div className="modal w-full h-full fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 border border-gray-300">
-                    <div className="w-full">
-                      {(isRecording || transcript) && (
-                        <div className="w-1/4 m-auto rounded-md border p-4 bg-white">
-                          <div className="flex-1 flex w-full justify-between">
-                            <div className="space-y-1">
-                              <p className="text-sm font-medium leading-none">
-                                {recordingComplete ? "Recorded" : "Recording"}
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {recordingComplete
-                                  ? "Thanks for talking."
-                                  : "Start speaking..."}
-                              </p>
-                            </div>
-                            {isRecording && (
-                              <div className="rounded-full w-4 h-4 bg-red-400 animate-pulse" />
-                            )}
-                          </div>
-
-                          {transcript && (
-                            <div className="border rounded-md p-2 h-fullm mt-4">
-                              <p className="mb-0">{transcript}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="flex items-center w-full">
-                        {isRecording ? (
-                          <button
-                            onClick={handleToggleRecording}
-                            className="mt-10 m-auto flex items-center justify-center bg-red-400 hover:bg-red-500 rounded-full w-20 h-20 focus:outline-none"
-                          >
-                            <svg
-                              className="h-12 w-12 "
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                            </svg>
-                          </button>
-                        ) : (
-                          <button
-                            onClick={handleToggleRecording}
-                            className="mt-10 m-auto flex items-center justify-center bg-blue-400 hover:bg-blue-500 rounded-full w-20 h-20 focus:outline-none"
-                          >
-                            <svg
-                              viewBox="0 0 256 256"
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="w-12 h-12 text-white"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M128 176a48.05 48.05 0 0 0 48-48V64a48 48 0 0 0-96 0v64a48.05 48.05 0 0 0 48 48ZM96 64a32 32 0 0 1 64 0v64a32 32 0 0 1-64 0Zm40 143.6V232a8 8 0 0 1-16 0v-24.4A80.11 80.11 0 0 1 48 128a8 8 0 0 1 16 0a64 64 0 0 0 128 0a8 8 0 0 1 16 0a80.11 80.11 0 0 1-72 79.6Z"
-                              />
-                            </svg>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                    <button className="bg-gray-500 text-white px-4 py-2 rounded-md" type="button" onClick={closeModal}>
-                      Close Modal
-                    </button>
-                  </div>
-                )}
-                <button
-                type="button"
-                className="absolute inset-y-0 end-0 flex items-center pe-3"
-                onClick={openModal}>
-                <svg
+                  <svg
                     className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +193,7 @@ const closeModal = () => {
                       d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"
                     />
                   </svg>
-                </button>
+                </button> */}
               </div>
               <button
                 data-drawer-target="logo-sidebar"
