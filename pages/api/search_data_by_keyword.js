@@ -7,6 +7,9 @@ export default async function handler(req, res) {
 
   const { keywords } = req.query;
 
+  // Proses kata kunci untuk menghilangkan kata tanya atau kata hubung
+  const processedKeywords = keywords.replace(/[\?\.,]/g, "").split(" ");
+
   try {
     const db = await connectDB();
 
@@ -18,21 +21,24 @@ export default async function handler(req, res) {
     ];
 
     let results = [];
-
     let route = "";
 
     for (const collectionName of collections) {
-      const metadataSearch = await db
-        .collection(collectionName)
-        .find({ metadata: { $in: keywords.split(" ") } })
-        .toArray();
-
       const urlPathSearch = await db
         .collection(collectionName)
-        .find({ url_path: { $regex: new RegExp(keywords, "i") } })
+        .find({
+          url_path: { $regex: new RegExp(processedKeywords.join("|"), "i") },
+        })
         .toArray();
 
-      results = results.concat(metadataSearch, urlPathSearch);
+      const metadataRegexSearch = await db
+        .collection(collectionName)
+        .find({
+          metadata: { $regex: new RegExp(processedKeywords.join("|"), "i") },
+        })
+        .toArray();
+
+      results = results.concat(urlPathSearch, metadataRegexSearch);
     }
 
     if (results.length > 0 && results[0].url_path) {
