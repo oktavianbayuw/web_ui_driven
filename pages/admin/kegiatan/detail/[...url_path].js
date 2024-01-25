@@ -29,6 +29,7 @@ export default function PenelitianDetailPage() {
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <h2 className="text-xl font-bold mb-2">{detail.judul_penelitian}</h2>
           <p className="text-gray-700 mb-3">{detail.nama_dosen}</p>
+          <img src={detail.gambar_path} alt="Penelitian Image" className="w-full mb-4 rounded-lg" />
           <p className="text-gray-700 mb-3">
             <b>Tahun Penelitian : </b> {detail.tahun_penelitian}
           </p>
