@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// Your component file (e.g., pages/index.js)
+import React from "react";
 import AdminSidebar from "../../../components/Layouts/admin_sidebar";
 import InfoCard from "../../../components/Layouts/infoCard";
 import Link from "next/link";
@@ -51,29 +52,29 @@ export default function index() {
   return (
     <>
       <AdminSidebar />
-      <div className="dark:border-gray-700 mt-14 p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-          <ImageSlider images={images} />
-        </div>
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:ml-64">
-         <div className="p-3">
+         <div className="p-3 md:col-span-2 lg:col-span-1">
+            <div className="p-4 rounded-lg dark:border-gray-700 mt-14">
+              <ImageSlider images={images} />
+            </div>
             <h2 className="text-lg font-bold mb-2 mt-3">Most Frequently Used</h2>
             <div className="grid grid-cols-4 gap-4 p-4">
-            {cards.map((card, index) => (
-              <Link href={card.link} key={index}>
-                <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 hover:shadow-lg transition duration-200 ease-in-out">
-                  <h2 className="text-sm mb-2 text-center mt-3">
-                    {card.title}
-                  </h2>
-                </div>
-              </Link>
-            ))}
+              {cards.map((card, index) => (
+                <Link href={card.link} key={index}>
+                  <div className="p-4 border-2 border-gray-200 border rounded-lg dark:border-gray-700 hover:shadow-lg transition duration-200 ease-in-out">
+                    <h2 className="text-sm mb-2 text-center mt-3">
+                      {card.title}
+                    </h2>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-          </div>
-        <div className="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-          <div className="p-3">
-            <InfoCard schedules={schedules} />
+        <div className="p-3 md:col-span-2 lg:col-span-1">
+          <div className="rounded-lg dark:border-gray-700 mt-14">
+            <div className="p-3">
+              <InfoCard schedules={schedules} />
+            </div>
           </div>
         </div>
       </div>
