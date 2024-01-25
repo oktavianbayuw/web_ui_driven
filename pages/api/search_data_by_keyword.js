@@ -1,13 +1,9 @@
 import connectDB from "../../connection/mongo";
 
 export default async function handler(req, res) {
-  if (req.method !== "GET") {
-    return res.status(405).end();
-  }
+  const { keywords, path_name, page = 1, pageSize = 2 } = req.query;
 
-  const { keywords, path_name } = req.query;
   console.log(path_name);
-
   const processedKeywords = keywords.replace(/[\?\.,]/g, "").split(" ");
 
   try {
@@ -21,6 +17,7 @@ export default async function handler(req, res) {
     ];
 
     let data = [];
+    let totalData = 0;
     let route = "";
 
     for (const collectionName of collections) {
@@ -40,23 +37,33 @@ export default async function handler(req, res) {
         continue;
       }
 
-      const urlPathSearch = await db
-        .collection(collectionName)
-        .find({
-          url_path: { $regex: new RegExp(processedKeywords.join("|"), "i") },
-        })
+      const collection = db.collection(collectionName);
+      const countQuery = {
+        $or: [
+          {
+            url_path: { $regex: new RegExp(processedKeywords.join("|"), "i") },
+          },
+          {
+            metadata: { $regex: new RegExp(processedKeywords.join("|"), "i") },
+          },
+        ],
+      };
+
+      totalData += await collection.countDocuments(countQuery);
+
+      const skip = (page - 1) * pageSize;
+      const intPageSize = parseInt(pageSize, 10);
+
+      const searchData = await collection
+        .find(countQuery)
+        .skip(skip)
+        .limit(intPageSize)
         .toArray();
 
-      const metadataRegexSearch = await db
-        .collection(collectionName)
-        .find({
-          metadata: { $regex: new RegExp(processedKeywords.join("|"), "i") },
-        })
-        .toArray();
-
-      data = data.concat(urlPathSearch, metadataRegexSearch);
+      data = data.concat(searchData);
     }
 
+    console.log(data.length === 0);
     if (data.length > 0 && data[0].url_path) {
       if (path_name === "info-kampus") {
         route = "admin/info-kampus/hasil";
@@ -68,9 +75,15 @@ export default async function handler(req, res) {
       } else {
         route = `admin/semua_pencarian`;
       }
+    } else {
+      route = "notfound";
     }
 
-    res.status(200).json({ data, route });
+    res.status(200).json({
+      data,
+      route,
+      totalPages: Math.ceil(totalData / pageSize), // Perubahan disini
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

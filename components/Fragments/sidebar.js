@@ -213,16 +213,16 @@ const Sidebar = ({ navigation }) => {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+              <Link href="/admin/dashboard" className="flex ms-2 md:me-24">
                 <img
-                  src="https://flowbite.com/docs/images/logo.svg"
+                  src="https://thumb.ac-illust.com/40/407a2356307385a0779f2ecb9566f8db_t.jpeg"
                   className="h-8 me-3"
                   alt="Website Logo"
                 />
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  DEA G-Speech
+                <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap dark:text-white">
+                  OktaVika G-Speech
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex items-center">
               <div className="flex items-center ms-3">

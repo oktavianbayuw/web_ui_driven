@@ -75,7 +75,7 @@ export default function index() {
             <div className="ml-6">
               {data.map((news, index) => (
                 <div className="p-3">
-                  <Link href={`/admin/info-kampus/${news._id}`}>
+                  <Link href={`/admin/info-kampus/detail/${news.url_path}`}>
                     <Card key={index} news={news} />
                   </Link>
                 </div>

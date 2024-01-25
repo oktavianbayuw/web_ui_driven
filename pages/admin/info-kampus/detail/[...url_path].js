@@ -11,7 +11,7 @@ export default function InfoKampusDetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       if (url_path) {
-        const response = await fetch(`/api/info-kampus/${url_path}`);
+        const response = await fetch(`/api/info_berita_kampus/${url_path}`);
         const result = await response.json();
         setDetail(result.data);
       }
@@ -27,12 +27,16 @@ export default function InfoKampusDetailPage() {
       <AdminSidebar />
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-          <h2 className="text-xl font-bold mb-2">{detail.judul}</h2>
-          <p className="text-gray-700 mb-3">{detail.penulis}</p>
-          <img src={detail.gambar} alt="Penelitian Image" className="w-full mb-4 rounded-lg" />
-          <p className="text-gray-700 mb-3">
-            {detail.deskripsi} 
+          <h2 className="text-xl font-bold mb-2 text-center">{detail.judul}</h2>
+          <p className="text-gray-700 mb-3 text-center">
+            <b>Oleh : </b> {detail.penulis}
           </p>
+          <img
+            src={detail.gambar}
+            alt="Gambar Informasi"
+            className="w-full mb-4 rounded-lg h-96"
+          />
+          <p className="text-gray-700 mb-3">{detail.deskripsi}</p>
           <p className="text-gray-700 mb-3">
             <b>Tanggal Publish :</b> {detail.tanggal_publish}
           </p>

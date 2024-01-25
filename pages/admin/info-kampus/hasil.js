@@ -3,7 +3,7 @@ import AdminSidebar from "../../../components/Layouts/admin_sidebar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function penelitian_detail() {
+export default function hasil() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -40,9 +40,6 @@ export default function penelitian_detail() {
 
   console.log("Data:", data);
 
-  data.forEach((item) => {
-    console.log(item.url_path);
-  });
   return (
     <>
       <AdminSidebar />
@@ -56,7 +53,7 @@ export default function penelitian_detail() {
               <h2 className="text-xl font-bold mb-2">{item.judul}</h2>
               <p className="text-gray-700 mb-4">{item.deskripsi}</p>
               <Link
-                href={`/admin/kegiatan/detail/${item.url_path}`}
+                href={`/admin/info-kampus/detail/${item.url_path}`}
                 className="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded"
               >
                 Detail
@@ -64,7 +61,6 @@ export default function penelitian_detail() {
             </div>
           ))}
         </div>
-        {/* Tampilkan nomor halaman */}
         <div className="flex justify-center mt-4">
           <button
             onClick={() => setCurrentPage(currentPage - 1)}

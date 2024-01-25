@@ -35,7 +35,7 @@ export default function penelitian() {
             {cards.map((card, index) => (
               <Link href={card.link} key={index}>
                 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 hover:shadow-lg transition duration-200 ease-in-out">
-                  <img src={card.bg_img} style={{ height: "100%" }} />
+                  <img src={card.bg_img} className="h-40" />
                   <h2 className="text-xl font-bold mb-2 text-center mt-3">
                     {card.title}
                   </h2>
