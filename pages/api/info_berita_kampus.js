@@ -1,20 +1,32 @@
 import connectDB from "../../connection/mongo";
 
 export default async function handler(req, res) {
-  const db = await connectDB();
-  const collection = db.collection("info_berita_kampus");
-
-  const data = await collection.find().toArray();
-
-  res.status(200).json({ data });
-
-  const { page = 1, pageSize = 10 } = req.query;
+  const { page = 1, pageSize = 2 } = req.query;
 
   try {
-    // Fetch data from your MongoDB collection with pagination
-    const data = await yourPaginationLogic(page, pageSize);
+    const db = await connectDB();
+    const collection = db.collection("info_berita_kampus");
 
-    res.status(200).json({ data });
+    // Hitung jumlah total dat1
+    const totalData = await collection.countDocuments();
+
+    // Hitung skip berdasarkan halaman dan ukuran halaman
+    const skip = (page - 1) * pageSize;
+
+    // Ubah pageSize menjadi integer
+    const intPageSize = parseInt(pageSize, 10);
+
+    // Ambil data dari MongoDB dengan limit dan skip
+    const data = await collection
+      .find()
+      .skip(skip)
+      .limit(intPageSize)
+      .toArray();
+
+    res.status(200).json({
+      data,
+      totalPages: Math.ceil(totalData / intPageSize),
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

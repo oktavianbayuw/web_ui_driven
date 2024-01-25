@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 export default function penelitian_detail() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
   const { keywords } = router.query;
 
@@ -23,18 +24,16 @@ export default function penelitian_detail() {
 
         console.log("Search Result:", result);
 
-        if (result && result.results && Array.isArray(result.results)) {
-          setData(result.results);
-        } else {
+        if (result && result.data && Array.isArray(result.data)) {
           setData(result.data);
+          setTotalPages(result.totalPages);
         }
       } catch (error) {
         console.error(error);
         setData([]);
+        setTotalPages(1);
       }
     };
-
-    console.log(data);
 
     fetchData();
   }, [keywords, currentPage]);
@@ -63,18 +62,31 @@ export default function penelitian_detail() {
             </div>
           ))}
         </div>
-        {/* Tambahkan navigasi halaman */}
         <div className="flex justify-center mt-4">
           <button
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
-            className="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            className="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-4 rounded"
           >
             Previous
           </button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`mx-2 ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300 hover:bg-gray-400 text-gray-800"
+              } font-bold py-2 px-4 rounded`}
+            >
+              {index + 1}
+            </button>
+          ))}
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
-            className="bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            disabled={currentPage === totalPages}
+            className="ml-2 bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Next
           </button>
