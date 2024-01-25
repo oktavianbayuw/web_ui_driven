@@ -3,21 +3,23 @@ import Link from "next/link";
 import axios from "axios";
 import Router from "next/router";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 
 const Sidebar = ({ navigation }) => {
+  const router = useRouter();
   const [openIndex, setOpenIndex] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const [searchStatus, setSearchStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const toggle = () => setIsVoiceModalOpen(!isVoiceModalOpen);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isRecording, setIsRecording] = useState(false);
   const [recordingComplete, setRecordingComplete] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [voiceSearchTranscript, setVoiceSearchTranscript] = useState("");
-
   const recognitionRef = useRef(null);
+  const currentPath = router.pathname;
+  const pathParts = currentPath.split("/");
+  const path_name = pathParts[pathParts.length - 1];
+  console.log(path_name === "kegiatan");
 
   const startRecording = () => {
     setIsRecording(true);
@@ -62,9 +64,9 @@ const Sidebar = ({ navigation }) => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `/api/search_data_by_keyword?keywords=${voiceSearchTranscript}`
+        `/api/search_data_by_keyword?keywords=${voiceSearchTranscript}&path_name=${path_name}`
       );
-      const { results, route } = response.data;
+      const { route } = response.data;
 
       if (voiceSearchTranscript === "") {
         setSearchStatus("No results found");
@@ -72,20 +74,11 @@ const Sidebar = ({ navigation }) => {
       } else {
         if (route) {
           Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
-        } else {
-          setSearchResults(results);
-
-          setSearchStatus(
-            results.length > 0 ? "Results found" : "No results found"
-          );
         }
       }
     } catch (error) {
       console.error(error);
     }
-  };
-  const openModal = () => {
-    setIsModalOpen(true);
   };
   return (
     <>

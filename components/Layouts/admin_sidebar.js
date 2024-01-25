@@ -7,6 +7,7 @@ const AdminSidebar = () => {
     ["Kegiatan Kampus", "/admin/kegiatan"],
     ["Info Kampus", "/admin/info-kampus"],
   ];
+
   return (
     <>
       <Sidebar navigation={navigation} />

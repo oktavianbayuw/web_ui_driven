@@ -3,7 +3,7 @@ import AdminSidebar from "../../../components/Layouts/admin_sidebar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function penelitian_detail() {
+export default function hasil() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -16,7 +16,7 @@ export default function penelitian_detail() {
     const fetchData = async () => {
       try {
         const apiUrl = keywords
-          ? `/api/search_data_by_keyword?keywords=${keywords}&page=${currentPage}&pageSize=${pageSize}`
+          ? `/api/search_data_by_keyword?keywords=${keywords}&page=${currentPage}&pageSize=${pageSize}&path_name=dashboard`
           : `/api/penelitian?page=${currentPage}&pageSize=${pageSize}`;
 
         const response = await fetch(apiUrl);
@@ -39,6 +39,7 @@ export default function penelitian_detail() {
   }, [keywords, currentPage]);
 
   console.log("Data:", data);
+
   return (
     <>
       <AdminSidebar />
@@ -49,11 +50,8 @@ export default function penelitian_detail() {
               key={index}
               className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mb-4"
             >
-              <h2 className="text-xl font-bold mb-2">
-                {item.judul_penelitian}
-              </h2>
-              <p className="text-gray-700">{item.nama_dosen}</p>
-              <p className="text-gray-700 mb-3">{item.tahun_penelitian}</p>
+              <h2 className="text-xl font-bold mb-2">{item.judul}</h2>
+              <p className="text-gray-700 mb-4">{item.deskripsi}</p>
               <Link
                 href={`/admin/kegiatan/detail/${item.url_path}`}
                 className="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded"
