@@ -28,6 +28,9 @@ const Sidebar = ({ navigation }) => {
     recognitionRef.current.interimResults = true;
     recognitionRef.current.lang = "id-ID";
 
+    // get string indonesian language
+    recognitionRef.current.lang = "id-ID";
+
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
 
@@ -225,7 +228,7 @@ const Sidebar = ({ navigation }) => {
                   alt="Website Logo"
                 />
                 <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap dark:text-white">
-                  OktaVika G-Speech
+                  DEA
                 </span>
               </Link>
             </div>
