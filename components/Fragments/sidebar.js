@@ -23,14 +23,21 @@ const Sidebar = ({ navigation }) => {
 
   const startRecording = () => {
     setIsRecording(true);
-    recognitionRef.current = new window.webkitSpeechRecognition();
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognitionRef.current = new SpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
-    recognitionRef.current.lang = "id-ID";
 
     // get string indonesian language
     recognitionRef.current.lang = "id-ID";
 
+    recognitionRef.current.onstart = () => {
+      // Schedule stop recording after 3 seconds when the recognition starts
+      setTimeout(() => {
+        stopRecording();
+      }, 3000);
+    };
+    
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
 
@@ -38,10 +45,6 @@ const Sidebar = ({ navigation }) => {
     };
 
     recognitionRef.current.start();
-
-    setTimeout(() => {
-      stopRecording();
-    }, 3000);
   };
 
   useEffect(() => {
