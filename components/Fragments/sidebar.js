@@ -26,14 +26,19 @@ const Sidebar = ({ navigation }) => {
     recognitionRef.current = new window.webkitSpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
+    recognitionRef.current.lang = "id-ID";
 
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
-      setTranscript(transcript);
+
       setVoiceSearchTranscript(transcript);
     };
 
     recognitionRef.current.start();
+
+    setTimeout(() => {
+      stopRecording();
+    }, 3000);
   };
 
   useEffect(() => {
