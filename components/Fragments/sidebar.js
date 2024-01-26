@@ -37,10 +37,10 @@ const Sidebar = ({ navigation }) => {
         stopRecording();
       }, 3000);
     };
-    
+
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
-
+      setTranscript(transcript);
       setVoiceSearchTranscript(transcript);
     };
 
