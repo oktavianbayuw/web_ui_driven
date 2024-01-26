@@ -27,6 +27,9 @@ const Sidebar = ({ navigation }) => {
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
 
+    // get string indonesian language
+    recognitionRef.current.lang = "id-ID";
+
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
       setTranscript(transcript);
