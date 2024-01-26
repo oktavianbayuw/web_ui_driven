@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const uri = "mongodb://localhost:27017/web_ai_speech";
+const uri =
+  "mongodb://mongo:mongo@localhost:27017/web_ai_speech?authSource=admin";
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
