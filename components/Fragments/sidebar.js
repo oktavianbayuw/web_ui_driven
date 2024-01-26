@@ -220,7 +220,7 @@ const Sidebar = ({ navigation }) => {
                   alt="Website Logo"
                 />
                 <span className="self-center text-xl font-semibold sm:text-xl whitespace-nowrap dark:text-white">
-                  OktaVika G-Speech
+                  DEA
                 </span>
               </Link>
             </div>
