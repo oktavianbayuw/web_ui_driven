@@ -23,7 +23,8 @@ const Sidebar = ({ navigation }) => {
 
   const startRecording = () => {
     setIsRecording(true);
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     recognitionRef.current = new SpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
@@ -40,26 +41,32 @@ const Sidebar = ({ navigation }) => {
     recognitionRef.current.start();
 
     setTimeout(() => {
-      stopRecording(); // Stop recording after 3 seconds
-      if (!recordingComplete) {
-        handleSearch(); // Trigger search only if recordingComplete is false
-      }
+      stopRecording();
     }, 3000);
   };
 
   useEffect(() => {
+    let timeoutId;
+
     return () => {
       if (recognitionRef.current) {
-        recognitionRef.current.stop();
+        // Clear any existing timeout
+        clearTimeout(timeoutId);
+
+        // Set a new timeout for 3 seconds
+        timeoutId = setTimeout(() => {
+          console.log(transcript);
+          handleSearch();
+          setRecordingComplete(true);
+        }, 2000);
       }
     };
-  }, []);
+  }, [voiceSearchTranscript]);
 
   const stopRecording = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.stop();
       setRecordingComplete(true);
-      handleSearch();
+      recognitionRef.current.stop();
     }
   };
 
@@ -79,20 +86,15 @@ const Sidebar = ({ navigation }) => {
       );
       const { route } = response.data;
 
-      if (voiceSearchTranscript === "") {
-        setSearchStatus("No results found");
-        alert("Silakan Masukkan Keyword Pencarian");
-      } else {
-        if (route) {
-          Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
-        }
+      if (route) {
+        Router.push(`/${route}?keywords=${voiceSearchTranscript}`);
       }
     } catch (error) {
       console.error(error);
     }
   };
   const handleLogout = () => {
-    router.push('/login');
+    router.push("/login");
   };
   return (
     <>
@@ -123,7 +125,7 @@ const Sidebar = ({ navigation }) => {
                   id="voice-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search..."
-                  value={voiceSearchTranscript}
+                  value={transcript}
                   onChange={(e) => setVoiceSearchTranscript(e.target.value)}
                   required
                 />
@@ -356,7 +358,10 @@ const Sidebar = ({ navigation }) => {
           </ul>
         </div>
         <div className="fixed left-0 bottom-0 w-64 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-          <button onClick={handleLogout} className="bg-red-400 p-2 rounded-sm w-full text-white text-center">
+          <button
+            onClick={handleLogout}
+            className="bg-red-400 p-2 rounded-sm w-full text-white text-center"
+          >
             Logout
           </button>
         </div>
