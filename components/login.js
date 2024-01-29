@@ -1,15 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-
-
 const Login = () => {
   const router = useRouter();
   const handleSignIn = (event) => {
     event.preventDefault();
-    router.push('/admin/dashboard');
+    router.push("/admin/dashboard");
   };
-  
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -34,6 +32,8 @@ const Login = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required=""
+                    value={"user@email.com"}
+                    disabled
                   ></input>
                 </div>
                 <div>
@@ -50,6 +50,7 @@ const Login = () => {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
+                    disabled
                   ></input>
                 </div>
                 <button
