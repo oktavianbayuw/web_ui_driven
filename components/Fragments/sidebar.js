@@ -91,6 +91,9 @@ const Sidebar = ({ navigation }) => {
       console.error(error);
     }
   };
+  const handleLogout = () => {
+    router.push('/login');
+  };
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -353,7 +356,7 @@ const Sidebar = ({ navigation }) => {
           </ul>
         </div>
         <div className="fixed left-0 bottom-0 w-64 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-          <button className="bg-red-400 p-2 rounded-sm w-full text-white text-center">
+          <button onClick={handleLogout} className="bg-red-400 p-2 rounded-sm w-full text-white text-center">
             Logout
           </button>
         </div>

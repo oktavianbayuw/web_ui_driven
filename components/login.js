@@ -1,6 +1,15 @@
 import React from "react";
+import { useRouter } from "next/router";
+
+
 
 const Login = () => {
+  const router = useRouter();
+  const handleSignIn = (event) => {
+    event.preventDefault();
+    router.push('/admin/dashboard');
+  };
+  
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -43,17 +52,9 @@ const Login = () => {
                     required=""
                   ></input>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start"></div>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
                 <button
                   type="submit"
+                  onClick={handleSignIn}
                   className="w-full ml-3 text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
                   Sign in
