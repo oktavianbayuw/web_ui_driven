@@ -31,13 +31,6 @@ const Sidebar = ({ navigation }) => {
     // get string indonesian language
     recognitionRef.current.lang = "id-ID";
 
-    recognitionRef.current.onstart = () => {
-      // Schedule stop recording after 3 seconds when the recognition starts
-      setTimeout(() => {
-        stopRecording();
-      }, 3000);
-    };
-
     recognitionRef.current.onresult = (event) => {
       const { transcript } = event.results[event.results.length - 1][0];
       setTranscript(transcript);
@@ -45,6 +38,13 @@ const Sidebar = ({ navigation }) => {
     };
 
     recognitionRef.current.start();
+
+    setTimeout(() => {
+      stopRecording(); // Stop recording after 3 seconds
+      if (!recordingComplete) {
+        handleSearch(); // Trigger search only if recordingComplete is false
+      }
+    }, 3000);
   };
 
   useEffect(() => {
